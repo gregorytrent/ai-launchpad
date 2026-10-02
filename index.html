@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Launchpad — Learn AI Before You Enroll</title>
+<style>
+:root{--bg:#0f1220;--panel:#181c30;--card:#1f2440;--text:#e8ebff;--mute:#98a0c8;--acc:#7c8cff;--acc2:#ff7a59;--ok:#3ecf8e;--bad:#ff5d6c;--bd:#2d3359}
+body.light{--bg:#f4f6ff;--panel:#fff;--card:#fff;--text:#1b1f3a;--mute:#5a6190;--bd:#d9ddf5}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+header{display:flex;align-items:center;gap:14px;padding:12px 20px;background:var(--panel);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:5}
+header h1{font-size:1.15rem;margin:0;cursor:pointer}
+.bar{flex:1;height:10px;background:var(--bd);border-radius:9px;overflow:hidden;max-width:360px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0;transition:width .5s}
+.pill{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:3px 12px;font-size:.85rem}
+.wrap{display:flex;min-height:calc(100vh - 56px)}
+nav{width:260px;background:var(--panel);border-right:1px solid var(--bd);padding:14px;flex-shrink:0}
+nav a{display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:10px;color:var(--text);text-decoration:none;margin-bottom:4px;font-size:.95rem}
+nav a:hover{background:var(--card)}nav a.on{background:var(--acc);color:#fff}
+nav a .ck{margin-left:auto}
+main{flex:1;padding:26px;max-width:980px;margin:0 auto;width:100%}
+h2{font-size:1.8rem;margin:.2em 0}h3{margin-top:0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.mini{background:var(--panel);border:1px solid var(--bd);border-radius:14px;padding:14px}
+.btn{background:var(--acc);color:#fff;border:0;padding:9px 16px;border-radius:10px;cursor:pointer;font-size:.95rem;font-weight:600}
+.btn.alt{background:var(--card);color:var(--text);border:1px solid var(--bd)}
+.btn.on{background:var(--acc2)}
+button.btn:hover{filter:brightness(1.1)}
+input[type=text],textarea,select{width:100%;padding:9px;border-radius:10px;border:1px solid var(--bd);background:var(--panel);color:var(--text);font:inherit}
+textarea{min-height:90px}
+label{display:block;margin:6px 0}
+.hero{text-align:center;padding:30px 10px}
+.hero h2{font-size:2.4rem;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{display:inline-block;font-size:.75rem;padding:2px 9px;border-radius:12px;background:var(--bd);color:var(--mute);margin-right:5px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.q{margin:14px 0;padding-bottom:8px;border-bottom:1px dashed var(--bd)}.ex{color:var(--mute);font-size:.9rem}
+.tok{display:inline-block;padding:2px 5px;margin:2px;border-radius:6px;font-family:monospace;white-space:pre}
+.row{display:flex;gap:10px;align-items:center;margin:6px 0;flex-wrap:wrap}
+.meter{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}.meter i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.bars div.b{display:flex;align-items:center;gap:8px;margin:5px 0}
+.bars .fill{height:20px;background:var(--acc);border-radius:5px;transition:width .3s;min-width:2px}
+.flip{cursor:pointer;min-height:110px}
+canvas{width:100%;max-width:560px;background:var(--panel);border:1px solid var(--bd);border-radius:12px;cursor:crosshair}
+.serp{background:#fff;color:#202124;border-radius:10px;padding:12px;font-family:arial,sans-serif}
+.serp .t{color:#1a0dab;font-size:1.15rem}.serp .u{color:#006621;font-size:.85rem}
+table{width:100%;border-collapse:collapse}td,th{border:1px solid var(--bd);padding:8px;text-align:left;vertical-align:top;font-size:.92rem}
+.cert{border:6px double var(--acc);padding:40px;text-align:center;border-radius:12px}
+@media(max-width:800px){.wrap{flex-direction:column}nav{width:100%;display:flex;overflow-x:auto;gap:4px}nav a{white-space:nowrap}nav a .ck{margin-left:4px}}
+@media print{header,nav,.noprint{display:none!important}body{background:#fff;color:#000}}
+.celeb-overlay{position:fixed;inset:0;background:rgba(10,12,24,.72);display:flex;align-items:center;justify-content:center;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.celeb-overlay.show{opacity:1;pointer-events:auto}
+.celeb-card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:28px 32px;text-align:center;max-width:320px;transform:scale(.7);transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.celeb-overlay.show .celeb-card{transform:scale(1)}
+.celeb-photo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid var(--acc);margin:0 auto 14px;display:block}
+.celeb-card.big .celeb-photo{width:160px;height:160px}
+.celeb-card h3{margin:4px 0}
+.confetti-piece{position:fixed;top:-20px;width:9px;height:14px;z-index:51;pointer-events:none;border-radius:2px}
+@keyframes confetti-fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+</style>
+</head>
+<body>
+<header>
+  <h1 onclick="location.hash='#home'">🚀 AI Launchpad</h1>
+  <div class="bar"><i id="pbar"></i></div>
+  <span class="pill" id="pts">0 pts</span>
+  <button class="btn alt" id="theme" title="Toggle theme">🌓</button>
+</header>
+<div class="wrap"><nav id="nav"></nav><main id="app"></main></div>
+<div class="celeb-overlay" id="celeb"><div class="celeb-card" id="celebCard"><img class="celeb-photo" src="edwina.jpg" alt=""><h3 id="celebMsg">You go girl! 🎉</h3><p class="ex" id="celebSub"></p></div></div>
+
+<script>
+/* ---------- State (saved in this browser only) ---------- */
+let S={done:{},best:{},checks:{},name:'',light:false};
+try{Object.assign(S,JSON.parse(localStorage.getItem('aila')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('aila',JSON.stringify(S))}catch(e){}};
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- Celebration (photo pop-up + confetti) ---------- */
+function confettiBurst(n){
+ const colors=['#7c8cff','#ff7a59','#3ecf8e','#ffb84d','#ff5d6c'];
+ for(let i=0;i<n;i++){
+  const p=document.createElement('div');p.className='confetti-piece';
+  p.style.left=Math.random()*100+'vw';p.style.background=colors[i%colors.length];
+  p.style.animation=`confetti-fall ${1.6+Math.random()*1.2}s ease-in forwards`;
+  p.style.animationDelay=(Math.random()*.4)+'s';
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),3200);
+ }
+}
+function celebrate(sub,big){
+ const ov=$('#celeb'),card=$('#celebCard');
+ card.classList.toggle('big',!!big);
+ $('#celebSub').textContent=sub||'';
+ confettiBurst(big?70:30);
+ ov.classList.add('show');
+ clearTimeout(window._celebTimer);
+ window._celebTimer=setTimeout(()=>ov.classList.remove('show'),big?4200:2600);
+}
+$('#celeb').onclick=()=>$('#celeb').classList.remove('show');
+
+/* ---------- Curriculum ---------- */
+const M=[
+/* 1 */{id:'m1',icon:'🧠',title:'What Is AI?',time:'15 min',
+body:()=>`
+<p>Artificial Intelligence (AI) is software that performs tasks that normally need human intelligence: understanding language, recognizing images, making predictions, and making decisions. The terms below nest inside each other like Russian dolls. <b>Click each ring.</b></p>
+<div class="card"><div class="row" style="align-items:flex-start">
+<svg viewBox="0 0 300 300" width="300" id="rings">
+<circle cx="150" cy="150" r="140" fill="#7c8cff33" stroke="#7c8cff" data-k="ai" style="cursor:pointer"/>
+<circle cx="150" cy="185" r="100" fill="#3ecf8e33" stroke="#3ecf8e" data-k="ml" style="cursor:pointer"/>
+<circle cx="150" cy="215" r="65" fill="#ffb84d44" stroke="#ffb84d" data-k="dl" style="cursor:pointer"/>
+<circle cx="150" cy="238" r="35" fill="#ff7a5966" stroke="#ff7a59" data-k="gen" style="cursor:pointer"/>
+<g fill="currentColor" font-size="13" text-anchor="middle" pointer-events="none"><text x="150" y="40" font-weight="700">Artificial Intelligence</text><text x="150" y="102">Machine Learning</text><text x="150" y="170">Deep Learning</text><text x="150" y="242">GenAI</text></g></svg>
+<div id="ringinfo" class="mini" style="flex:1;min-width:240px"><b>Tap a ring</b> to learn what it means.</div></div></div>
+<h3>📜 Timeline — click a milestone</h3>
+<div class="row" id="tl"></div><div class="mini" id="tlinfo">Pick a year above.</div>
+<h3>Three kinds of AI</h3>
+<div class="grid">
+<div class="mini"><b>Narrow AI</b><br>Does one job well (spam filters, recommendations, chatbots). <span class="tag">Everything today</span></div>
+<div class="mini"><b>General AI (AGI)</b><br>Hypothetical AI that matches humans across most tasks. <span class="tag">Research goal</span></div>
+<div class="mini"><b>Superintelligence</b><br>Hypothetical AI far beyond human ability. <span class="tag">Debated</span></div></div>`,
+init(r){
+ const info={ai:'<b>AI</b> is the big umbrella: any technique that makes machines act intelligently, including old rule-based systems.',ml:'<b>Machine Learning</b>: instead of hand-writing rules, we give computers examples and they learn patterns.',dl:'<b>Deep Learning</b>: machine learning using many-layered neural networks. It powers image recognition, speech, and modern language models.',gen:'<b>Generative AI</b>: deep learning that creates new content (text, images, music, code, video).'};
+ $$('#rings circle',r).forEach(c=>c.onclick=()=>{$('#ringinfo',r).innerHTML=info[c.dataset.k]});
+ const tl=[[1950,'Alan Turing proposes the "Imitation Game" (Turing Test) as a way to ask whether machines can think.'],[1956,'The Dartmouth workshop: the term "artificial intelligence" is born.'],[1997,'IBM Deep Blue defeats world chess champion Garry Kasparov.'],[2012,'AlexNet wins an image-recognition contest by a huge margin, kicking off the deep learning boom.'],[2017,'Google researchers publish "Attention Is All You Need," introducing the Transformer, the architecture behind modern LLMs.'],[2022,'ChatGPT launches and brings generative AI to the general public.']];
+ $('#tl',r).innerHTML=tl.map((t,i)=>`<button class="btn alt" data-i="${i}">${t[0]}</button>`).join('');
+ $$('#tl button',r).forEach(b=>b.onclick=()=>{$$('#tl button',r).forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#tlinfo',r).textContent=tl[b.dataset.i][1]});},
+quiz:[{q:'Which term is the broadest?',o:['Deep Learning','Artificial Intelligence','Generative AI','Neural Network'],a:1,e:'AI is the umbrella; ML, DL, and GenAI sit inside it.'},
+{q:'Which best describes today\'s AI systems?',o:['General AI','Superintelligence','Narrow AI','Conscious AI'],a:2,e:'Current systems are strong at specific tasks but are not general intelligence.'},
+{q:'The Transformer architecture was introduced in…',o:['1956','1997','2017','2022'],a:2,e:'The 2017 Transformer paper underpins today\'s large language models.'},
+{q:'Generative AI is best described as AI that…',o:['Only sorts data','Creates new content','Replaces all software','Needs no data'],a:1,e:'GenAI produces new text, images, audio, code, and more.'}]},
+
+/* 2 */{id:'m2',icon:'📊',title:'How Machines Learn',time:'20 min',
+body:()=>`
+<p>Machine learning means <b>learning from examples instead of following hand-written rules</b>. Flip each card to see the three main styles.</p>
+<div class="grid" id="flips"></div>
+<div class="card"><h3>🔬 Lab: Train a classifier</h3>
+<p>Pick a class, then click the canvas to add training examples. The shaded background shows what the AI predicts for every spot, using the <i>k-nearest neighbors</i> method. Try clustering the colors, then mixing them and changing k.</p>
+<div class="row"><button class="btn" id="cA">🔵 Add Class A</button><button class="btn alt" id="cB">🟠 Add Class B</button>
+<label style="margin:0">k = <b id="kv">3</b> <input type="range" id="kk" min="1" max="9" step="2" value="3"></label>
+<button class="btn alt" id="clr">Clear</button><button class="btn alt" id="rnd">Random data</button></div>
+<canvas id="knn" width="560" height="320"></canvas>
+<p class="ex">Takeaway: more (and cleaner) training data gives sharper boundaries. Messy or biased data gives messy or biased AI.</p></div>
+<h3>The ML workflow</h3>
+<div class="row">${['1 Collect data','2 Clean & label','3 Train model','4 Test it','5 Deploy','6 Monitor'].map(s=>`<span class="pill">${s}</span>`).join('→')}</div>`,
+init(r){
+ const f=[['Supervised','Learn from labeled examples (photo + "cat"). Used for spam filters and price prediction.'],['Unsupervised','Find hidden groups in unlabeled data. Used for customer segments.'],['Reinforcement','Learn by trial, reward, and penalty. Used for game-playing AIs and robotics.']];
+ $('#flips',r).innerHTML=f.map(x=>`<div class="mini flip" data-b="${esc(x[1])}"><b>${x[0]}</b><br><span class="ex">tap to flip</span></div>`).join('');
+ $$('.flip',r).forEach(d=>{let on=0;d.onclick=()=>{on=!on;d.innerHTML=on?d.dataset.b:`<b>${f[[...d.parentNode.children].indexOf(d)][0]}</b><br><span class="ex">tap to flip</span>`}});
+ const c=$('#knn',r),x=c.getContext('2d');let pts=[],cls=0,k=3;const col=['#4f9dff','#ff7a59'];
+ function draw(){x.clearRect(0,0,c.width,c.height);
+  if(pts.length>=k){for(let i=0;i<c.width;i+=10)for(let j=0;j<c.height;j+=10){const n=pts.map(p=>({d:(p.x-i-5)**2+(p.y-j-5)**2,c:p.c})).sort((a,b)=>a.d-b.d).slice(0,k);const v=n.filter(a=>a.c).length;x.fillStyle=v*2>k?'rgba(255,122,89,.25)':'rgba(79,157,255,.25)';x.fillRect(i,j,10,10)}}
+  pts.forEach(p=>{x.beginPath();x.arc(p.x,p.y,6,0,7);x.fillStyle=col[p.c];x.fill();x.strokeStyle='#fff';x.stroke()})}
+ c.onclick=e=>{const b=c.getBoundingClientRect();pts.push({x:(e.clientX-b.left)*c.width/b.width,y:(e.clientY-b.top)*c.height/b.height,c:cls});draw()};
+ $('#cA',r).onclick=()=>{cls=0;$('#cA',r).className='btn';$('#cB',r).className='btn alt'};
+ $('#cB',r).onclick=()=>{cls=1;$('#cB',r).className='btn';$('#cA',r).className='btn alt'};
+ $('#kk',r).oninput=e=>{k=+e.target.value;$('#kv',r).textContent=k;draw()};
+ $('#clr',r).onclick=()=>{pts=[];draw()};
+ $('#rnd',r).onclick=()=>{pts=[];for(let i=0;i<14;i++){pts.push({x:140+Math.random()*120,y:60+Math.random()*200,c:0},{x:300+Math.random()*120,y:60+Math.random()*200,c:1})}draw()};
+ draw()},
+quiz:[{q:'Learning from labeled examples is called…',o:['Unsupervised','Supervised','Reinforcement','Random'],a:1,e:'Labels (the "right answers") supervise the learning.'},
+{q:'Finding customer groups in unlabeled data is…',o:['Supervised','Unsupervised','Reinforcement','Impossible'],a:1,e:'No labels means unsupervised.'},
+{q:'If training data is biased, the model will likely…',o:['Fix the bias itself','Ignore it','Reproduce the bias','Stop working'],a:2,e:'Models learn the patterns in their data, good and bad.'},
+{q:'Reinforcement learning relies on…',o:['Rewards and penalties','Only labels','Human typing','Databases only'],a:0,e:'It learns by trial and error guided by rewards.'}]},
+
+/* 3 */{id:'m3',icon:'🕸️',title:'Neural Networks & LLMs',time:'25 min',
+body:()=>`
+<p>A <b>neural network</b> is layers of simple math units ("neurons") that pass signals along. Training adjusts billions of tiny dials (<i>parameters</i>) until the output is good. A <b>Large Language Model (LLM)</b> is a neural network trained on huge amounts of text to <b>predict the next token</b>. That one trick, repeated, produces essays, code, and conversation.</p>
+<div class="card"><h3>🔤 Lab 1: Tokenizer</h3><p>Models don't read letters or words. They read <i>tokens</i> (chunks). This is a simplified illustration, since real tokenizers differ by model.</p>
+<textarea id="tin">Artificial intelligence is transforming social media marketing!</textarea><div id="tout" style="margin-top:8px"></div><p class="ex" id="tcount"></p></div>
+<div class="card"><h3>🎲 Lab 2: Next-word predictor</h3>
+<select id="psel"></select>
+<label>Temperature: <b id="tv">1.0</b> <input type="range" id="temp" min="0.1" max="2" step="0.1" value="1"></label>
+<div class="bars" id="pbars"></div>
+<div class="row"><button class="btn" id="samp">🎯 Sample a word</button><b id="sres"></b></div>
+<p class="ex">Low temperature: safe, predictable. High temperature: more creative, more random. This is why the same prompt can give different answers.</p></div>
+<h3>Key ideas</h3><div class="grid">
+<div class="mini"><b>Training</b><br>Learning from massive data. Expensive, done once.</div>
+<div class="mini"><b>Inference</b><br>Using the trained model to answer you.</div>
+<div class="mini"><b>Context window</b><br>How much text the model can "see" at once.</div>
+<div class="mini"><b>Hallucination</b><br>Confident-sounding output that is false. Always verify.</div></div>`,
+init(r){
+ const tin=$('#tin',r),cols=['#7c8cff55','#3ecf8e55','#ffb84d55','#ff7a5955'];
+ const tk=()=>{const t=(tin.value.match(/ ?[A-Za-z]{1,6}|\d{1,3}| ?[^\sA-Za-z\d]|\s+/g)||[]);$('#tout',r).innerHTML=t.map((s,i)=>`<span class="tok" style="background:${cols[i%4]}">${esc(s)}</span>`).join('');$('#tcount',r).textContent=`${t.length} tokens · ${tin.value.length} characters`};
+ tin.oninput=tk;tk();
+ const P={'The cat sat on the':[['mat',3],['couch',2.4],['roof',1.6],['keyboard',1.2],['moon',.2]],'Once upon a':[['time',5],['hill',1],['midnight',.8],['dream',.4]],'Great social media marketing is all about':[['engagement',2.5],['storytelling',2.2],['consistency',2],['community',1.9],['memes',.8]]};
+ const sel=$('#psel',r);sel.innerHTML=Object.keys(P).map(k=>`<option>${k}</option>`).join('');
+ let cur=[];
+ function pr(){const T=+$('#temp',r).value;$('#tv',r).textContent=T.toFixed(1);const L=P[sel.value],e=L.map(l=>Math.exp(l[1]/T)),s=e.reduce((a,b)=>a+b);cur=L.map((l,i)=>[l[0],e[i]/s]);
+  $('#pbars',r).innerHTML=cur.map(c=>`<div class="b"><span style="width:90px">${c[0]}</span><div class="fill" style="width:${c[1]*70}%"></div><span>${(c[1]*100).toFixed(0)}%</span></div>`).join('')}
+ sel.onchange=()=>{$('#sres',r).textContent='';pr()};$('#temp',r).oninput=pr;
+ $('#samp',r).onclick=()=>{let x=Math.random(),w=cur[cur.length-1][0];for(const c of cur){if((x-=c[1])<=0){w=c[0];break}}$('#sres',r).textContent=sel.value+' '+w+' …'};pr()},
+quiz:[{q:'An LLM\'s core task is…',o:['Searching Google','Predicting the next token','Storing facts in a table','Drawing images'],a:1,e:'Next-token prediction, repeated, creates fluent text.'},
+{q:'Higher temperature makes output…',o:['More random/creative','More accurate','Shorter','Free of errors'],a:0,e:'Temperature flattens the probabilities so less likely words get picked.'},
+{q:'A "hallucination" is…',o:['A software crash','A confident but false output','A slow reply','A type of image'],a:1,e:'Models can state falsehoods fluently. Verify important claims.'},
+{q:'A token is…',o:['Always one word','A chunk of text','A password','A GPU'],a:1,e:'Tokens are pieces of words, whole words, or punctuation.'}]},
+
+/* 4 */{id:'m4',icon:'🧰',title:'Major AI Products',time:'20 min',
+body:()=>`
+<p>The AI landscape changes quickly, so learn the <b>categories</b> and the <b>jobs each tool does best</b>. Filter below, and always check each tool's current features and pricing.</p>
+<div class="row" id="filters"></div><div class="grid" id="tools"></div>
+<div class="card"><h3>How to choose</h3><ul>
+<li><b>Need a thinking partner or writer?</b> Use a chat assistant.</li><li><b>Need sourced, current facts?</b> Use an AI search tool and click the sources.</li>
+<li><b>Need visuals?</b> Use an image tool, or Canva for fast, brand-ready designs.</li><li><b>Need audio?</b> Use music or voice tools.</li></ul>
+<p class="ex">Tip: try the same prompt in two tools and compare. That is the fastest way to learn their personalities.</p></div>`,
+init(r){
+ const T=[['Claude','Chat','Anthropic','Strong at writing, analysis, long documents, and coding.'],['ChatGPT','Chat','OpenAI','Popular all-purpose assistant with many built-in tools.'],['Gemini','Chat','Google','Works closely with Google apps and search.'],['Microsoft Copilot','Productivity','Microsoft','AI inside Word, Excel, Outlook, and Teams.'],['Perplexity','Search','Perplexity','Answer engine that cites its sources.'],['NotebookLM','Productivity','Google','Chat with your own documents; makes study guides.'],['Midjourney','Image','Midjourney','Artistic, high-quality image generation.'],['Adobe Firefly','Image','Adobe','Image generation built into Adobe tools.'],['Canva Magic Studio','Image','Canva','AI design, resize, and social graphics in Canva.'],['Suno','Audio','Suno','Generates full songs from text prompts.'],['ElevenLabs','Audio','ElevenLabs','Realistic AI voices and narration.'],['Runway','Video','Runway','Generate and edit video with AI.'],['GitHub Copilot','Coding','GitHub','AI pair-programmer in your code editor.'],['Claude Code','Coding','Anthropic','Agentic coding tool for building software.']];
+ const cats=['All',...new Set(T.map(t=>t[1]))];let cur='All';
+ function show(){$('#filters',r).innerHTML=cats.map(c=>`<button class="btn ${c==cur?'':'alt'}" data-c="${c}">${c}</button>`).join('');
+  $$('#filters button',r).forEach(b=>b.onclick=()=>{cur=b.dataset.c;show()});
+  $('#tools',r).innerHTML=T.filter(t=>cur=='All'||t[1]==cur).map(t=>`<div class="mini"><b>${t[0]}</b> <span class="tag">${t[1]}</span><br><span class="ex">by ${t[2]}</span><p style="margin:6px 0 0">${t[3]}</p></div>`).join('')}
+ show()},
+quiz:[{q:'Which category fits Perplexity best?',o:['Music','AI search with citations','Video','Coding'],a:1,e:'Perplexity is an answer engine that shows sources.'},
+{q:'Which tool type generates songs from text?',o:['Suno','Copilot in Excel','NotebookLM','Perplexity'],a:0,e:'Suno creates music; ElevenLabs focuses on voice.'},
+{q:'Best habit when comparing AI tools?',o:['Trust the first one','Run the same prompt in two tools','Never read output','Only use free tools'],a:1,e:'Side-by-side testing reveals strengths.'},
+{q:'NotebookLM is mainly for…',o:['Chatting with your own documents','Making videos','Editing photos','Coding'],a:0,e:'You upload sources and it answers from them.'}]},
+
+/* 5 */{id:'m5',icon:'✍️',title:'Prompt Engineering',time:'25 min',
+body:()=>`
+<p>A <b>prompt</b> is your instruction to an AI. Better prompts give better results. The recipe: <b>Role + Task + Context + Audience + Format + Constraints</b>.</p>
+<div class="grid"><div class="mini"><span class="bad">❌ Weak</span><br><i>"Write about coffee."</i></div>
+<div class="mini"><span class="ok">✅ Strong</span><br><i>"You are a café marketing coach. Write 3 Instagram captions for a new oat-milk latte aimed at busy moms. Friendly tone, under 150 characters, with one emoji each."</i></div></div>
+<div class="card"><h3>🛠️ Prompt builder</h3>
+<div class="grid">
+<label>Role<input type="text" id="p1" placeholder="a social media strategist"></label>
+<label>Task<input type="text" id="p2" placeholder="write 5 post ideas"></label>
+<label>Context<input type="text" id="p3" placeholder="for a new bakery launching in May"></label>
+<label>Audience<input type="text" id="p4" placeholder="local families"></label>
+<label>Format<input type="text" id="p5" placeholder="a numbered list"></label>
+<label>Constraints<input type="text" id="p6" placeholder="warm tone, no jargon, under 100 words"></label></div>
+<div class="meter"><i id="pm"></i></div><p class="ex" id="pl">Fill in the fields…</p>
+<textarea id="pout" readonly></textarea><div class="row"><button class="btn" id="pcopy">📋 Copy prompt</button></div></div>
+<h3>Power moves</h3><div class="grid">
+<div class="mini"><b>Show examples</b><br>Paste a sample of the style you want.</div>
+<div class="mini"><b>Iterate</b><br>"Make it shorter," "more playful," "add a hook."</div>
+<div class="mini"><b>Ask for steps</b><br>"Think step by step" improves reasoning tasks.</div>
+<div class="mini"><b>Let it interview you</b><br>"Ask me 5 questions before you start."</div></div>`,
+init(r){
+ const ids=[1,2,3,4,5,6],lab=['Role','Task','Context','Audience','Format','Constraints'];
+ function b(){const v=ids.map(i=>$('#p'+i,r).value.trim());const n=v.filter(Boolean).length;$('#pm',r).style.width=n/6*100+'%';
+  $('#pl',r).textContent=n<3?'Weak: add more detail':n<5?'Good: getting specific':'Excellent: very clear';
+  let t='';if(v[0])t+=`You are ${v[0]}. `;if(v[1])t+=`Your task: ${v[1]}. `;if(v[2])t+=`Context: ${v[2]}. `;if(v[3])t+=`Audience: ${v[3]}. `;if(v[4])t+=`Format: ${v[4]}. `;if(v[5])t+=`Constraints: ${v[5]}.`;$('#pout',r).value=t}
+ ids.forEach(i=>$('#p'+i,r).oninput=b);
+ $('#pcopy',r).onclick=()=>{const o=$('#pout',r);o.select();try{navigator.clipboard.writeText(o.value)}catch(e){document.execCommand('copy')}$('#pcopy',r).textContent='✅ Copied!'}},
+quiz:[{q:'Which is the strongest prompt?',o:['Write a post','Write a LinkedIn post about our new HR tool for busy managers, 120 words, confident tone','Post please','Marketing'],a:1,e:'Specific task, audience, length, and tone.'},
+{q:'"Ask me 5 questions before you start" is useful because…',o:['It slows the AI','It gathers context','It lowers cost','It hides errors'],a:1,e:'Letting the AI interview you fills in missing context.'},
+{q:'If the first answer is close but not right, you should…',o:['Give up','Iterate with follow-up instructions','Start a new account','Use all caps'],a:1,e:'Prompting is a conversation. Refine it.'},
+{q:'Which is NOT part of the recipe?',o:['Role','Format','Constraints','Wi-Fi password'],a:3,e:'Role, task, context, audience, format, constraints.'}]},
+
+/* 6 */{id:'m6',icon:'📱',title:'AI for Social Media',time:'30 min',
+body:()=>`
+<p>AI is a <b>creative assistant</b>, not a replacement for your voice. Use it for ideas, drafts, repurposing, captions, hashtags, and scheduling plans. Then add your personal touch.</p>
+<div class="card"><h3>📅 4-week content calendar generator</h3>
+<div class="grid"><label>Your niche / business<input type="text" id="niche" value="healthy meal prep"></label><label>Target audience<input type="text" id="aud" value="busy professionals"></label></div>
+<button class="btn" id="gen">Generate plan</button><div id="cal" style="margin-top:12px"></div>
+<div class="row"><button class="btn alt" id="ccopy" hidden>📋 Copy AI prompt for this plan</button></div></div>
+<div class="card"><h3>✂️ Character counter</h3>
+<textarea id="cc" placeholder="Paste or type a caption…"></textarea><div id="ccb"></div><p class="ex">Typical limits; platforms change them, so double-check.</p></div>
+<h3>AI social workflow</h3>
+<div class="row">${['Research trends','Brainstorm 20 ideas','Draft captions','Create visuals','Edit in YOUR voice','Schedule','Review analytics'].map(s=>`<span class="pill">${s}</span>`).join('→')}</div>
+<div class="grid" style="margin-top:12px">
+<div class="mini"><b>Repurpose</b><br>Turn one blog post into a carousel, short video script, and 5 tweets.</div>
+<div class="mini"><b>Voice training</b><br>Paste 3 of your best posts and ask AI to match the style.</div>
+<div class="mini"><b>Be transparent</b><br>Follow each platform's rules on AI-generated content labels.</div>
+<div class="mini"><b>Engage humans</b><br>Reply to comments yourself. Community can't be automated.</div></div>`,
+init(r){
+ let lastPrompt='';
+ $('#gen',r).onclick=()=>{const n=$('#niche',r).value||'your niche',a=$('#aud',r).value||'your audience';
+  const W=[['Educate',[`3 myths about ${n}`,`Beginner's guide to ${n} for ${a}`,`"Did you know?" quick fact`]],['Build trust',[`Behind-the-scenes of ${n}`,`Your story: why you started`,`Day-in-the-life video`]],['Social proof',[`Customer win or testimonial`,`Before/after for ${a}`,`Q&A: answer top 3 questions`]],['Convert',[`Offer or lead magnet for ${a}`,`Limited-time challenge in ${n}`,`Clear call-to-action post`]]];
+  $('#cal',r).innerHTML='<table><tr><th>Week</th><th>Theme</th><th>Post ideas</th></tr>'+W.map((w,i)=>`<tr><td>${i+1}</td><td><b>${w[0]}</b></td><td>${w[1].map(esc).join('<br>')}</td></tr>`).join('')+'</table>';
+  lastPrompt=`You are a social media strategist. Create a detailed 4-week content calendar for a ${n} brand targeting ${a}. Use weekly themes: Educate, Build trust, Social proof, Convert. For each week give 3 post ideas with a hook, a caption draft, and suggested hashtags. Format as a table.`;$('#ccopy',r).hidden=false};
+ $('#ccopy',r).onclick=()=>{try{navigator.clipboard.writeText(lastPrompt)}catch(e){}$('#ccopy',r).textContent='✅ Copied! Paste it into your AI tool'};
+ const L=[['X / Twitter',280],['Instagram caption',2200],['LinkedIn post',3000]];
+ $('#cc',r).oninput=e=>{const n=e.target.value.length;$('#ccb',r).innerHTML=L.map(l=>`<div class="row"><span style="width:150px">${l[0]}</span><div class="meter" style="flex:1"><i style="width:${Math.min(100,n/l[1]*100)}%;background:${n>l[1]?'var(--bad)':'var(--ok)'}"></i></div><span>${n}/${l[1]}</span></div>`).join('')};$('#cc',r).oninput({target:$('#cc',r)})},
+quiz:[{q:'Best use of AI in social media?',o:['Replace your voice entirely','Ideas, drafts, and repurposing that you edit','Buying followers','Ignoring comments'],a:1,e:'AI assists. Your voice and engagement make it work.'},
+{q:'"Repurposing" means…',o:['Deleting old posts','Turning one piece of content into many formats','Changing your username','Paying for ads'],a:1,e:'One blog post can become a carousel, video script, and more.'},
+{q:'To make AI match your style, you should…',o:['Paste samples of your best posts','Use shorter prompts','Turn off context','Use only emojis'],a:0,e:'Examples teach tone far better than adjectives.'},
+{q:'Which cannot be automated well?',o:['Hashtag lists','Caption drafts','Genuine community engagement','Content calendars'],a:2,e:'Real conversations build real communities.'}]},
+
+/* 7 */{id:'m7',icon:'🔍',title:'AI for SEO',time:'30 min',
+body:()=>`
+<p><b>SEO (Search Engine Optimization)</b> is making your content easy to find on search engines. AI speeds up keyword research, outlines, titles, and meta descriptions. <b>People-first, helpful, accurate content</b> is what ranks long-term.</p>
+<div class="card"><h3>🎯 Game: Sort the search intent</h3><p>Four intents: <b>Informational</b> (learn), <b>Navigational</b> (find a site), <b>Commercial</b> (compare), <b>Transactional</b> (buy).</p>
+<div class="mini"><b id="kw" style="font-size:1.2rem"></b></div>
+<div class="row" id="ib"></div><p id="ifb"></p><p class="ex" id="isc"></p></div>
+<div class="card"><h3>🔎 Title & meta description previewer</h3>
+<label>Page title (aim ≤ 60 chars)<input type="text" id="mt" value="Healthy Meal Prep for Busy Professionals | Fresh Fuel"></label><div class="meter"><i id="mtm"></i></div><span class="ex" id="mtc"></span>
+<label>Meta description (aim ≤ 155 chars)<textarea id="md">Save 5 hours a week with simple, healthy meal prep plans made for busy professionals. Get started free today.</textarea></label><div class="meter"><i id="mdm"></i></div><span class="ex" id="mdc"></span>
+<h4>Search preview</h4><div class="serp"><div class="u">www.freshfuel.example › meal-prep</div><div class="t" id="st"></div><div id="sd"></div></div></div>
+<h3>AI + SEO workflow</h3>
+<table><tr><th>Step</th><th>Ask AI to…</th></tr>
+<tr><td>Keyword ideas</td><td>"List 30 long-tail questions people ask about [topic], grouped by intent."</td></tr>
+<tr><td>Outline</td><td>"Create an article outline with H2/H3 headings answering the top questions."</td></tr>
+<tr><td>Titles & meta</td><td>"Write 5 title options under 60 characters and meta descriptions under 155."</td></tr>
+<tr><td>Improve</td><td>"Suggest internal links, FAQs, and missing subtopics."</td></tr>
+<tr><td>Human check</td><td>Add real experience, verify facts, cite sources, and edit for your voice.</td></tr></table>
+<div class="card"><h3>✅ SEO checklist</h3><div id="seoc"></div></div>`,
+init(r){
+ const K=[['how does solar power work','Informational'],['facebook login','Navigational'],['best running shoes for flat feet','Commercial'],['buy iphone case online','Transactional'],['what is a mortgage','Informational'],['nike official website','Navigational'],['top 5 email marketing tools compared','Commercial'],['order pizza near me','Transactional']];
+ const I=['Informational','Navigational','Commercial','Transactional'];let i=0,sc=0;
+ function nx(){if(i>=K.length){$('#kw',r).textContent=`Done! Score ${sc}/${K.length}`;$('#ib',r).innerHTML='<button class="btn" id="again">Play again</button>';$('#again',r).onclick=()=>{i=0;sc=0;$('#ifb',r).textContent='';nx()};return}
+  $('#kw',r).textContent='"'+K[i][0]+'"';$('#ib',r).innerHTML=I.map(x=>`<button class="btn alt">${x}</button>`).join('');
+  $$('#ib button',r).forEach(b=>b.onclick=()=>{const ok=b.textContent==K[i][1];if(ok)sc++;$('#ifb',r).innerHTML=ok?'<span class="ok">✅ Correct!</span>':`<span class="bad">❌ It's ${K[i][1]}.</span>`;i++;$('#isc',r).textContent=`Score: ${sc}`;setTimeout(nx,900)})}
+ nx();
+ function m(){const t=$('#mt',r).value,d=$('#md',r).value;
+  $('#mtm',r).style.width=Math.min(100,t.length/60*100)+'%';$('#mtm',r).style.background=t.length>60?'var(--bad)':'var(--ok)';$('#mtc',r).textContent=t.length+' chars';
+  $('#mdm',r).style.width=Math.min(100,d.length/155*100)+'%';$('#mdm',r).style.background=d.length>155?'var(--bad)':'var(--ok)';$('#mdc',r).textContent=d.length+' chars';
+  $('#st',r).textContent=t.length>60?t.slice(0,57)+'…':t;$('#sd',r).textContent=d.length>155?d.slice(0,152)+'…':d}
+ $('#mt',r).oninput=m;$('#md',r).oninput=m;m();
+ const C=['Target one clear topic per page','Match the search intent','Title ≤ 60 chars with main keyword','Meta description ≤ 155 chars with a call-to-action','Use descriptive headings (H1, H2, H3)','Add alt text to images','Link to related pages','Fast, mobile-friendly page','Verify AI facts and add original insight'];
+ $('#seoc',r).innerHTML=C.map((c,j)=>`<label><input type="checkbox" data-k="seo${j}" ${S.checks['seo'+j]?'checked':''}> ${c}</label>`).join('');
+ $$('#seoc input',r).forEach(c=>c.onchange=()=>{S.checks[c.dataset.k]=c.checked;save()})},
+quiz:[{q:'"Buy running shoes online" is which intent?',o:['Informational','Navigational','Transactional','None'],a:2,e:'The searcher is ready to purchase.'},
+{q:'Ideal title tag length is roughly…',o:['≤ 60 characters','200 characters','5 characters','No limit'],a:0,e:'Longer titles get cut off in results.'},
+{q:'What makes content rank long-term?',o:['Keyword stuffing','Helpful, accurate, people-first content','Copying competitors','Hidden text'],a:1,e:'Quality and usefulness beat tricks.'},
+{q:'After AI drafts an article, you should…',o:['Publish immediately','Fact-check, add experience, and edit','Delete the headings','Remove all links'],a:1,e:'Human review adds trust and originality.'}]},
+
+/* 8 */{id:'m8',icon:'⚖️',title:'Ethics, Safety & Your Degree Path',time:'25 min',
+body:()=>`
+<p>Powerful tools need wise users. Let's practice judgment, then map your path to an AI degree.</p>
+<div class="card"><h3>🧭 Scenario: Verify or Trust?</h3><div class="mini"><b id="sc"></b></div><div class="row" id="scb"></div><p id="scf"></p></div>
+<div class="grid">
+<div class="mini"><b>Bias</b><br>AI mirrors its training data. Check outputs for unfair patterns.</div>
+<div class="mini"><b>Privacy</b><br>Don't paste passwords, private client data, or sensitive personal information into AI tools.</div>
+<div class="mini"><b>Copyright</b><br>Know the rules for the content you generate and publish.</div>
+<div class="mini"><b>Deepfakes</b><br>Verify surprising images, audio, and video before sharing.</div>
+<div class="mini"><b>Transparency</b><br>Be honest about when and how you use AI.</div>
+<div class="mini"><b>Human in the loop</b><br>Keep a person accountable for important decisions.</div></div>
+<div class="card"><h3>🎓 Get ahead before school: your prep checklist</h3><div id="road"></div><div class="meter"><i id="rm"></i></div><p class="ex" id="rl"></p></div>
+<div class="card"><h3>What an AI degree typically covers</h3><div class="grid">
+<div class="mini"><b>Math</b><br>Linear algebra, calculus, probability, statistics.</div>
+<div class="mini"><b>Programming</b><br>Python, data structures, algorithms.</div>
+<div class="mini"><b>Core AI/ML</b><br>Machine learning, deep learning, NLP, computer vision.</div>
+<div class="mini"><b>Data</b><br>Cleaning, databases, visualization.</div>
+<div class="mini"><b>Applied & ethics</b><br>Responsible AI, projects, internships.</div></div></div>`,
+init(r){
+ const SC=[['AI gives you a statistic for your blog but no source.','Verify it','Use as is',0,'Always verify numbers and find the original source.'],['You want to paste a client\'s private contract into a public AI tool.','Paste it','Don\'t. Remove or avoid private data',1,'Protect sensitive information. Check your tool\'s privacy settings and policies.'],['A shocking video of a public figure is going viral.','Share quickly','Check reliable sources first',1,'Deepfakes are convincing. Verify before sharing.'],['AI drafts a caption that sounds just like you.','Edit and approve it yourself','Post without reading',0,'You are accountable for what you publish.']];
+ let i=0;function nx(){if(i>=SC.length){$('#sc',r).textContent='🎉 Nice judgment! Scenarios complete.';$('#scb',r).innerHTML='<button class="btn alt" id="rs">Restart</button>';$('#rs',r).onclick=()=>{i=0;$('#scf',r).textContent='';nx()};return}
+  const s=SC[i];$('#sc',r).textContent=s[0];$('#scb',r).innerHTML=[1,2].map(n=>`<button class="btn alt" data-n="${n-1}">${s[n]}</button>`).join('');
+  $$('#scb button',r).forEach(b=>b.onclick=()=>{const ok=+b.dataset.n==s[3];$('#scf',r).innerHTML=(ok?'<span class="ok">✅ Wise choice. </span>':'<span class="bad">⚠️ Risky. </span>')+s[4];i++;setTimeout(nx,2200)})}
+ nx();
+ const R=['Learn the AI basics (this course!)','Try 3 different AI tools weekly','Free intro-to-Python course','Review algebra and basic statistics','Build one small AI-assisted project','Start an "AI journal" of prompts that worked','Read about AI ethics and policy','Research degree programs and prerequisites','Talk to current students or professionals in AI'];
+ function rp(){const n=R.filter((_,j)=>S.checks['rd'+j]).length;$('#rm',r).style.width=n/R.length*100+'%';$('#rl',r).textContent=`${n}/${R.length} complete`}
+ $('#road',r).innerHTML=R.map((c,j)=>`<label><input type="checkbox" data-k="rd${j}" ${S.checks['rd'+j]?'checked':''}> ${c}</label>`).join('');
+ $$('#road input',r).forEach(c=>c.onchange=()=>{S.checks[c.dataset.k]=c.checked;save();rp()});rp()},
+quiz:[{q:'You get a surprising statistic from AI. Next step?',o:['Publish it','Verify with a reliable source','Ignore it','Make it bigger'],a:1,e:'Verify before you share.'},
+{q:'Which should you avoid pasting into a public AI tool?',o:['A recipe idea','Private client or personal data','A general question','A poem'],a:1,e:'Protect sensitive data.'},
+{q:'AI bias comes mainly from…',o:['Biased or unbalanced training data','Slow internet','Colors in the UI','Magic'],a:0,e:'Models learn the patterns in their data.'},
+{q:'Which math is core to machine learning?',o:['Origami','Linear algebra & statistics','Geometry only','None'],a:1,e:'Linear algebra, calculus, probability, and statistics.'}]}
+];
+
+const GLOSS=[['Algorithm','A step-by-step set of instructions for solving a problem.'],['Artificial Intelligence','Machines performing tasks that normally require human intelligence.'],['Bias','Systematic unfairness in AI output, often from skewed data.'],['Chatbot','A program that converses with users in natural language.'],['Context window','The amount of text a model can consider at once.'],['Deep learning','Machine learning using many-layered neural networks.'],['Fine-tuning','Further training a model on specialized data.'],['Generative AI','AI that creates new text, images, audio, or code.'],['Hallucination','Confident but false AI output.'],['Inference','Using a trained model to produce an answer.'],['LLM','Large Language Model: predicts text token by token.'],['Machine learning','Systems that learn patterns from data.'],['Neural network','Layers of connected math units loosely inspired by the brain.'],['NLP','Natural Language Processing: AI that works with human language.'],['Parameter','An adjustable value (dial) learned during training.'],['Prompt','The instruction you give an AI.'],['RAG','Retrieval-Augmented Generation: AI looks up documents before answering.'],['SEO','Search Engine Optimization.'],['Token','A chunk of text a model reads.'],['Training data','The examples a model learns from.']];
+
+/* ---------- Engine ---------- */
+const app=$('#app'),nav=$('#nav');
+function pts(){return Object.values(S.best).reduce((a,b)=>a+b*10,0)}
+function prog(){const n=M.filter(m=>S.done[m.id]).length;$('#pbar').style.width=n/M.length*100+'%';$('#pts').textContent=`⭐ ${pts()} pts · ${n}/${M.length}`}
+function buildNav(h){nav.innerHTML=`<a href="#home" class="${h=='home'?'on':''}">🏠 Home</a>`+M.map(m=>`<a href="#${m.id}" class="${h==m.id?'on':''}">${m.icon} ${m.title}<span class="ck">${S.done[m.id]?'✅':''}</span></a>`).join('')+`<a href="#gloss" class="${h=='gloss'?'on':''}">📖 Glossary</a><a href="#cert" class="${h=='cert'?'on':''}">🎓 Certificate</a>`}
+function quiz(m){return `<section class="card"><h3>🧠 Knowledge check (70% to pass)</h3>${m.quiz.map((q,i)=>`<div class="q"><p><b>${i+1}. ${q.q}</b></p>${q.o.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}<p class="ex" hidden></p></div>`).join('')}<button class="btn" id="sub">Check answers</button> <b id="res"></b></section>`}
+function render(){
+ const h=(location.hash||'#home').slice(1);buildNav(h);window.scrollTo(0,0);prog();
+ if(h=='home'){app.innerHTML=`<div class="hero"><h2>Learn AI before you enroll</h2><p>8 interactive modules covering how AI works, the major products, and practical ways to use AI for social media and SEO.</p><button class="btn" onclick="location.hash='#m1'">Start Module 1 →</button></div><div class="grid">${M.map((m,i)=>`<a href="#${m.id}" style="text-decoration:none;color:inherit"><div class="mini"><div style="font-size:2rem">${m.icon}</div><b>${i+1}. ${m.title}</b><br><span class="tag">${m.time}</span>${S.done[m.id]?'<span class="tag">✅ passed</span>':''}</div></a>`).join('')}</div><p class="ex" style="text-align:center;margin-top:20px">Progress saves automatically in this browser.</p>`;return}
+ if(h=='gloss'){app.innerHTML=`<h2>📖 Glossary</h2><input type="text" id="gs" placeholder="Search terms…"><div id="gl"></div>`;const g=()=>{const q=$('#gs').value.toLowerCase();$('#gl').innerHTML=GLOSS.filter(x=>(x[0]+x[1]).toLowerCase().includes(q)).map(x=>`<div class="card" style="margin:8px 0;padding:12px"><b>${x[0]}</b> — ${x[1]}</div>`).join('')};$('#gs').oninput=g;g();return}
+ if(h=='cert'){const all=M.every(m=>S.done[m.id]);app.innerHTML=all?`<h2>🎓 Certificate</h2><div class="noprint"><label>Your name <input type="text" id="cn" value="${esc(S.name)}"></label></div><div class="cert card"><p>This certifies that</p><h2 id="cname">${esc(S.name)||'__________'}</h2><p>has completed <b>AI Launchpad</b>, a beginner curriculum in AI foundations, major AI products, and AI for social media &amp; SEO.</p><p>Score: ${pts()} points · ${new Date().toLocaleDateString()}</p></div><button class="btn noprint" onclick="print()">🖨️ Print / Save as PDF</button>`:`<h2>🎓 Certificate</h2><div class="card">Pass all 8 module quizzes to unlock it. You've passed ${M.filter(m=>S.done[m.id]).length}/8.</div>`;const cn=$('#cn');if(cn)cn.oninput=()=>{S.name=cn.value;save();$('#cname').textContent=cn.value||'__________'};return}
+ const idx=M.findIndex(m=>m.id==h);if(idx<0){location.hash='#home';return}const m=M[idx];
+ app.innerHTML=`<span class="tag">Module ${idx+1} of ${M.length} · ${m.time}</span><h2>${m.icon} ${m.title}</h2>${m.body()}${quiz(m)}<div class="row">${idx>0?`<a class="btn alt" style="text-decoration:none" href="#${M[idx-1].id}">← Previous</a>`:''}${idx<M.length-1?`<a class="btn" style="text-decoration:none" href="#${M[idx+1].id}">Next →</a>`:`<a class="btn" style="text-decoration:none" href="#cert">🎓 Certificate</a>`}</div>`;
+ m.init(app);
+ $('#sub').onclick=()=>{let s=0;m.quiz.forEach((q,i)=>{const c=$(`input[name=q${i}]:checked`),ex=$$('.ex',app).filter(e=>e.closest('.q'))[i];const ok=c&&+c.value==q.a;if(ok)s++;ex.hidden=false;ex.innerHTML=(ok?'✅ ':'❌ ')+q.e});
+  const pass=s/m.quiz.length>=.7;S.best[m.id]=Math.max(S.best[m.id]||0,s);if(pass)S.done[m.id]=true;save();prog();buildNav(h);
+  $('#res').innerHTML=`${s}/${m.quiz.length} — ${pass?'<span class="ok">🎉 Passed! Module complete.</span>':'<span class="bad">Review the lesson and try again.</span>'}`;
+  const courseDone=pass&&M.every(x=>S.done[x.id]);
+  if(courseDone)$('#res').innerHTML+=' 🏆 Course complete! Visit the Certificate page.';
+  if(pass)celebrate(courseDone?'You finished the whole course!':`Module ${idx+1} complete`,courseDone);}}
+$('#theme').onclick=()=>{S.light=!S.light;document.body.classList.toggle('light',S.light);save()};
+document.body.classList.toggle('light',!!S.light);
+addEventListener('hashchange',render);render();
+</script>
+</body>
+</html>
