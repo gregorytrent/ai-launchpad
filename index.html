@@ -57,11 +57,12 @@ table{width:100%;border-collapse:collapse}td,th{border:1px solid var(--bd);paddi
 @media print{header,nav,.noprint{display:none!important}body{background:#fff;color:#000}}
 .celeb-overlay{position:fixed;inset:0;background:rgba(10,12,24,.72);display:flex;align-items:center;justify-content:center;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
 .celeb-overlay.show{opacity:1;pointer-events:auto}
-.celeb-card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:28px 32px;text-align:center;max-width:320px;transform:scale(.7);transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.celeb-card{background:var(--card);border:1px solid var(--bd);border-radius:28px;padding:48px 56px;text-align:center;width:min(92vw,560px);transform:scale(.7);transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(0,0,0,.4)}
 .celeb-overlay.show .celeb-card{transform:scale(1)}
-.celeb-photo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:4px solid var(--acc);margin:0 auto 14px;display:block}
-.celeb-card.big .celeb-photo{width:160px;height:160px}
-.celeb-card h3{margin:4px 0}
+.celeb-photo{width:min(60vw,260px);height:min(60vw,260px);border-radius:50%;object-fit:cover;border:6px solid var(--acc);margin:0 auto 22px;display:block}
+.celeb-card.big .celeb-photo{width:min(70vw,340px);height:min(70vw,340px)}
+.celeb-card h3{margin:4px 0;font-size:2rem}
+.celeb-card p{font-size:1.15rem}
 .confetti-piece{position:fixed;top:-20px;width:9px;height:14px;z-index:51;pointer-events:none;border-radius:2px}
 @keyframes confetti-fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
 </style>
